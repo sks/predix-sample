@@ -3,7 +3,6 @@ applications:
 - name: todo-service
   buildpack: java_buildpack
   memory: 512M
-  host: todoservice
   path: target/todo-service-0.0.1-SNAPSHOT.jar
   services:
     - database
