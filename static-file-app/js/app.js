@@ -5,9 +5,14 @@
  *
  * @type {angular.Module}
  */
-angular.module('todomvc', ['ngRoute', 'ngResource'])
-	.config(function ($routeProvider) {
+angular.module('todomvc', ['ngRoute', 'ngResource','oauth'])
+	.config(function ($routeProvider, $locationProvider) {
 		'use strict';
+
+		$locationProvider.html5Mode({
+  			enabled: true,
+  			requireBase: false
+		}).hashPrefix('!');
 
 		var routeConfig = {
 			controller: 'TodoCtrl',

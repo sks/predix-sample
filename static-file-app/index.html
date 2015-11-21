@@ -8,6 +8,12 @@
 		<style>[ng-cloak] { display: none; }</style>
 	</head>
 	<body ng-app="todomvc">
+	<oauth
+	    site="https://798f5d15-918b-4cb8-9709-bd0e2f8c0058.predix-uaa.run.aws-usw02-pr.ice.predix.io"
+	    client-id="todolist-client"
+	    redirect-uri="http://localhost:8080"
+	    scope="openid">
+	</oauth>
 		<ng-view />
 
 		<script type="text/ng-template" id="todomvc-index.html">
