@@ -1,0 +1,5 @@
+---
+applications:
+- name: my-static-content
+  buildpack: staticfile_buildpack
+  memory: 128M
