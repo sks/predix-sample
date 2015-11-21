@@ -3,3 +3,5 @@ applications:
 - name: todo-client
   buildpack: staticfile_buildpack
   memory: 128M
+env:
+  TODO_SERVER_URL: https://todo-server.run.aws-usw02-pr.ice.predix.io
