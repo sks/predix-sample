@@ -1,0 +1,29 @@
+{
+  "name": "todo-list",
+  "description": "",
+  "main": "package.json",
+  "authors": [
+    "Sabith <sabith@ge.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sks/predix-sample",
+  "moduleType": [
+    "globals"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "oauth-ng": "~0.4.2",
+    "angular-resource": "1.4.3",
+    "angular-route": "1.4.3"
+  },
+  "resolutions": {
+    "angular": "1.4.3"
+  }
+}
