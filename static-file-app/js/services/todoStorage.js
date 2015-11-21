@@ -61,7 +61,7 @@ angular.module('todomvc')
 				});
 				angular.copy(incompleteTodos, store.todos);
 
-				store.todos.filter(function (todo) {
+				originalTodos.filter(function (todo) {
 					return todo.completed;
 				}).forEach(function(completedTask){
 					store.api.delete({ id: completedTask.id },
