@@ -13,7 +13,7 @@ angular.module('todomvc')
 
 		// Detect if an API backend is present. If so, return the API module, else
 		// hand off the localStorage adapter
-		return $http.get('/api')
+		return $http.get('todo')
 			.then(function () {
 				return $injector.get('api');
 			}, function () {
@@ -24,12 +24,32 @@ angular.module('todomvc')
 	.factory('api', function ($resource) {
 		'use strict';
 
+		function getIdFor(todo){
+			var href = todo._links.self.href;
+			return href.substr(href.lastIndexOf('/') + 1)
+		}
+
 		var store = {
 			todos: [],
 
-			api: $resource('/api/todos/:id', null,
+			api: $resource('/todo/:id', null,
 				{
-					update: { method:'PUT' }
+					update: { 
+						method:'PUT'
+					},
+					query: {
+						method: 'GET',
+						isArray: true,
+						transformResponse: function(data, headersGetter){
+							var returnData = [];
+							JSON.parse(data)._embedded.todoes.forEach(function(todo){
+
+								todo.id = getIdFor(todo);
+								returnData.push(todo);
+							});
+							return returnData;
+						}
+					}
 				}
 			),
 
@@ -39,13 +59,17 @@ angular.module('todomvc')
 				var incompleteTodos = store.todos.filter(function (todo) {
 					return !todo.completed;
 				});
-
 				angular.copy(incompleteTodos, store.todos);
 
-				return store.api.delete(function () {
+				store.todos.filter(function (todo) {
+					return todo.completed;
+				}).forEach(function(completedTask){
+					store.api.delete({ id: completedTask.id },
+					function () {
 					}, function error() {
 						angular.copy(originalTodos, store.todos);
 					});
+				});
 			},
 
 			delete: function (todo) {
@@ -70,7 +94,7 @@ angular.module('todomvc')
 
 				return store.api.save(todo,
 					function success(resp) {
-						todo.id = resp.id;
+						todo.id = getIdFor(resp);
 						store.todos.push(todo);
 					}, function error() {
 						angular.copy(originalTodos, store.todos);
