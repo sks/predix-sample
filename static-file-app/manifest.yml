@@ -1,5 +1,5 @@
 ---
 applications:
-- name: my-static-content
+- name: todo-client
   buildpack: staticfile_buildpack
   memory: 128M
