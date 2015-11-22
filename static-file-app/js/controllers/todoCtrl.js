@@ -9,9 +9,31 @@ angular.module('todomvc')
 	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store) {
 		'use strict';
 
-		var todos = $scope.todos = store.todos;
+		$scope.uaa = {
+			site : 'https://798f5d15-918b-4cb8-9709-bd0e2f8c0058.predix-uaa.run.aws-usw02-pr.ice.predix.io',
+			clientId: 'todolist-client',
+			redirectUri: window.location.href,
+			scope: 'openid'
+		};
+		var todos = [];
+		
+		$scope.$on('oauth:authorized', function(event, token) {
+			var access_token = token.access_token;
+			$scope.isLoggedIn = !!token;
+			store.setToken(access_token);
+			$scope.todos = store.get();
+			todos = $scope.todos = store.todos;
+		});
 
+		$scope.isLoggedIn = false;
+
+		$scope.$on('oauth:logout', function(event) {
+  			$scope.isLoggedIn = false;
+		});
+
+		
 		$scope.newTodo = '';
+		
 		$scope.editedTodo = null;
 
 		$scope.$watch('todos', function () {

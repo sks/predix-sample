@@ -5,19 +5,21 @@
 		<title>AngularJS • TodoMVC</title>
 		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<link rel="stylesheet" href="css/app.css">
 		<style>[ng-cloak] { display: none; }</style>
 	</head>
 	<body ng-app="todomvc">
-	<oauth
-	    site="https://798f5d15-918b-4cb8-9709-bd0e2f8c0058.predix-uaa.run.aws-usw02-pr.ice.predix.io"
-	    client-id="todolist-client"
-	    redirect-uri="http://todo-client.run.aws-usw02-pr.ice.predix.io"
-	    scope="openid">
-	</oauth>
 		<ng-view />
 
 		<script type="text/ng-template" id="todomvc-index.html">
-			<section id="todoapp">
+			<oauth
+			    site="{{uaa.site}}"
+			    client-id="{{uaa.clientId}}"
+			    redirect-uri="{{uaa.redirectUri}}"
+			    scope="{{uaa.scope}}">
+			</oauth>
+				
+			<section id="todoapp" ng-show="isLoggedIn">
 				<header id="header">
 					<h1>todos</h1>
 					<form id="todo-form" ng-submit="addTodo()">
@@ -49,10 +51,10 @@
 							<a ng-class="{selected: status == ''} " href="#/">All</a>
 						</li>
 						<li>
-							<a ng-class="{selected: status == 'active'}" href="#/active">Active</a>
+							<a ng-class="{selected: status == 'active'}" href="active">Active</a>
 						</li>
 						<li>
-							<a ng-class="{selected: status == 'completed'}" href="#/completed">Completed</a>
+							<a ng-class="{selected: status == 'completed'}" href="completed">Completed</a>
 						</li>
 					</ul>
 					<button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
