@@ -2,7 +2,10 @@ package com.sks.predix.sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.repository.query.spi.EvaluationContextExtension;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -26,4 +29,10 @@ public class TodoServiceApplication extends ResourceServerConfigurerAdapter {
 			throws Exception {
 		resources.resourceId("openid");
 	}
+
+	@Bean
+	public EvaluationContextExtension securityEvaluationContextExtension() {
+		return new SecurityEvaluationContextExtension();
+	}
+
 }

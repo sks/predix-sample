@@ -5,11 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.hateoas.Identifiable;
 
 @Entity
 @Table(name = "todos")
-public class Todo extends AbstractPersistable<Long> {
+public class Todo extends SecureEntity<Long> implements Identifiable<Long> {
 
 	/**
 	 * 
@@ -38,6 +38,10 @@ public class Todo extends AbstractPersistable<Long> {
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	}
+
+	public void setId(long id) {
+		super.setId(id);
 	}
 
 }
