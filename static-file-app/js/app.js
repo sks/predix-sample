@@ -5,9 +5,14 @@
  *
  * @type {angular.Module}
  */
-angular.module('todomvc', ['ngRoute', 'ngResource'])
-	.config(function ($routeProvider) {
+angular.module('todomvc', ['ngRoute', 'ngResource','oauth'])
+	.config(function ($routeProvider, $locationProvider) {
 		'use strict';
+
+		$locationProvider.html5Mode({
+  			enabled: true,
+  			requireBase: false
+		}).hashPrefix('!');
 
 		var routeConfig = {
 			controller: 'TodoCtrl',
@@ -15,10 +20,7 @@ angular.module('todomvc', ['ngRoute', 'ngResource'])
 			resolve: {
 				store: function (todoStorage) {
 					// Get the correct module (API or localStorage).
-					return todoStorage.then(function (module) {
-						module.get(); // Fetch the todo records in the background.
-						return module;
-					});
+					return todoStorage;
 				}
 			}
 		};
